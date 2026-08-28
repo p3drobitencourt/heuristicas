@@ -52,21 +52,21 @@ def _log(msg: str = "") -> None:
 # ---------------------------------------------------------------------------
 
 TABU_GRID = {
-    "tenure":       [5, 10, 20],
-    "max_iter":     [200, 500, 1000],
-    "no_improve":   [50, 100],
+    "tenure":       [10, 20],
+    "max_iter":     [500, 1000],
+    "no_improve":   [100],
     "neighborhood": ["flip", "swap"],
 }
 
 PSO_GRID = {
-    "n_particles": [20, 50, 100],
-    "max_iter":    [100, 200, 500],
+    "n_particles": [30, 100],
+    "max_iter":    [100, 300],
     "w":           [0.4, 0.7, 0.9],
-    "c1_c2":       [(1.5, 1.5), (2.0, 2.0)],
+    "c1_c2":       [(2.0, 2.0)],
     "v_max":       [4, 6],
 }
 
-N_RUNS   = 10     # execuções por combinação
+N_RUNS   = 5     # reduzido de 10 para 5 para viabilizar tempo
 BASE_SEED = 42    # semente base; cada execução usa BASE_SEED + run_idx
 
 PLOT_INSTANCES = {"P06", "P07", "KNAPPI_1_100"}   # instâncias com gráfico de convergência

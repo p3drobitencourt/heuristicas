@@ -1,22 +1,138 @@
-21:06:04 ============================================================
-21:06:04 Carregando instancias...
-21:06:04 ============================================================
-21:06:04 
-Combinacoes Tabu : 36
-21:06:04 Combinacoes PSO  : 108
-21:06:04 Execucoes por combo : 10
-21:06:04 Total estimado de execucoes : 12,960
+21:48:03 ============================================================
+21:48:03 Carregando instancias...
+21:48:03 ============================================================
+21:48:03 
+Combinacoes Tabu : 8
+21:48:03 Combinacoes PSO  : 24
+21:48:03 Execucoes por combo : 5
+21:48:03 Total estimado de execucoes : 1,440
 
-21:06:04 
+21:48:03 
 ============================================================
-21:06:04   INSTANCIA: P01  (n=10, C=165, otimo=309)
-21:06:04 ============================================================
-21:06:04   [Busca Tabu]  36 combinacoes x 10 execucoes ...
-21:06:04     Tabu combo 6/36 | 0s decorridos
-21:06:04     Tabu combo 12/36 | 0s decorridos
-21:06:04     Tabu combo 18/36 | 0s decorridos
-21:06:04     Tabu combo 24/36 | 0s decorridos
-21:06:04     Tabu combo 30/36 | 0s decorridos
-21:06:04     Tabu combo 36/36 | 0s decorridos
-21:06:04   [PSO Binario]  108 combinacoes x 10 execucoes ...
-21:06:10     PSO  combo 18/108 | 6s decorridos
+21:48:03   INSTANCIA: P01  (n=10, C=165, otimo=309)
+21:48:03 ============================================================
+21:48:03   [Busca Tabu]  8 combinacoes x 5 execucoes ...
+21:48:03     Tabu combo 6/8 | 0s decorridos
+21:48:03     Tabu combo 8/8 | 0s decorridos
+21:48:03   [PSO Binario]  24 combinacoes x 5 execucoes ...
+21:48:10     PSO  combo 18/24 | 7s decorridos
+21:48:19     PSO  combo 24/24 | 16s decorridos
+21:48:19 
+============================================================
+21:48:19   INSTANCIA: P02  (n=5, C=26, otimo=51)
+21:48:19 ============================================================
+21:48:19   [Busca Tabu]  8 combinacoes x 5 execucoes ...
+21:48:19     Tabu combo 6/8 | 16s decorridos
+21:48:19     Tabu combo 8/8 | 16s decorridos
+21:48:19   [PSO Binario]  24 combinacoes x 5 execucoes ...
+21:48:24     PSO  combo 18/24 | 21s decorridos
+21:48:30     PSO  combo 24/24 | 27s decorridos
+21:48:30 
+============================================================
+21:48:30   INSTANCIA: P03  (n=6, C=190, otimo=150)
+21:48:30 ============================================================
+21:48:30   [Busca Tabu]  8 combinacoes x 5 execucoes ...
+21:48:30     Tabu combo 6/8 | 27s decorridos
+21:48:30     Tabu combo 8/8 | 27s decorridos
+21:48:30   [PSO Binario]  24 combinacoes x 5 execucoes ...
+21:48:36     PSO  combo 18/24 | 33s decorridos
+21:48:42     PSO  combo 24/24 | 39s decorridos
+21:48:42 
+============================================================
+21:48:42   INSTANCIA: P04  (n=7, C=50, otimo=107)
+21:48:42 ============================================================
+21:48:42   [Busca Tabu]  8 combinacoes x 5 execucoes ...
+21:48:42     Tabu combo 6/8 | 39s decorridos
+21:48:42     Tabu combo 8/8 | 39s decorridos
+21:48:42   [PSO Binario]  24 combinacoes x 5 execucoes ...
+21:48:48     PSO  combo 18/24 | 45s decorridos
+21:48:55     PSO  combo 24/24 | 52s decorridos
+21:48:55 
+============================================================
+21:48:55   INSTANCIA: P05  (n=8, C=104, otimo=900)
+21:48:55 ============================================================
+21:48:55   [Busca Tabu]  8 combinacoes x 5 execucoes ...
+21:48:55     Tabu combo 6/8 | 52s decorridos
+21:48:55     Tabu combo 8/8 | 52s decorridos
+21:48:55   [PSO Binario]  24 combinacoes x 5 execucoes ...
+21:48:58     PSO  combo 18/24 | 56s decorridos
+21:49:03     PSO  combo 24/24 | 60s decorridos
+21:49:03 
+============================================================
+21:49:03   INSTANCIA: P06  (n=7, C=170, otimo=1735)
+21:49:03 ============================================================
+21:49:03   [Busca Tabu]  8 combinacoes x 5 execucoes ...
+21:49:03     Tabu combo 6/8 | 60s decorridos
+21:49:03     Tabu combo 8/8 | 60s decorridos
+21:49:03   [PSO Binario]  24 combinacoes x 5 execucoes ...
+21:49:08     PSO  combo 18/24 | 65s decorridos
+21:49:15     PSO  combo 24/24 | 72s decorridos
+21:49:15 
+============================================================
+21:49:15   INSTANCIA: P07  (n=15, C=750, otimo=1458)
+21:49:15 ============================================================
+21:49:15   [Busca Tabu]  8 combinacoes x 5 execucoes ...
+21:49:15     Tabu combo 6/8 | 72s decorridos
+21:49:15     Tabu combo 8/8 | 72s decorridos
+21:49:15   [PSO Binario]  24 combinacoes x 5 execucoes ...
+21:49:21     PSO  combo 18/24 | 78s decorridos
+21:49:28     PSO  combo 24/24 | 85s decorridos
+21:49:28 
+============================================================
+21:49:28   INSTANCIA: P08  (n=24, C=6404180, otimo=13549094)
+21:49:28 ============================================================
+21:49:28   [Busca Tabu]  8 combinacoes x 5 execucoes ...
+21:49:29     Tabu combo 6/8 | 86s decorridos
+21:49:29     Tabu combo 8/8 | 86s decorridos
+21:49:29   [PSO Binario]  24 combinacoes x 5 execucoes ...
+21:49:36     PSO  combo 18/24 | 93s decorridos
+21:49:44     PSO  combo 24/24 | 102s decorridos
+21:49:44 
+============================================================
+21:49:44   INSTANCIA: knapPI_1_100  (n=100, C=995, otimo=None)
+21:49:44 ============================================================
+21:49:44   [Busca Tabu]  8 combinacoes x 5 execucoes ...
+21:49:46     Tabu combo 6/8 | 103s decorridos
+21:49:47     Tabu combo 8/8 | 104s decorridos
+21:49:47   [PSO Binario]  24 combinacoes x 5 execucoes ...
+21:50:07     PSO  combo 18/24 | 124s decorridos
+21:50:32     PSO  combo 24/24 | 150s decorridos
+21:50:32 
+============================================================
+21:50:32 Salvando resultados...
+21:50:32 ============================================================
+21:50:32   CSV salvo: C:\Users\pedro\Documents\Faculdade\heuristica\results\results_detailed.csv  (1,440 linhas)
+21:50:34   XLSX salvo: C:\Users\pedro\Documents\Faculdade\heuristica\results\results_summary.xlsx
+21:50:34 
+Gerando graficos de convergencia...
+21:50:34   P06
+21:50:35     Grafico salvo: C:\Users\pedro\Documents\Faculdade\heuristica\results\plots\convergence_p06.png
+21:50:35   P07
+21:50:35     Grafico salvo: C:\Users\pedro\Documents\Faculdade\heuristica\results\plots\convergence_p07.png
+21:50:35   knapPI_1_100
+21:50:35     Grafico salvo: C:\Users\pedro\Documents\Faculdade\heuristica\results\plots\convergence_knappi_1_100.png
+21:50:35 
+============================================================
+21:50:35 Experimentos concluidos em 2.5 min
+21:50:35 ============================================================
+21:50:35 
+=== Melhor resultado por instancia x heuristica ===
+21:50:35    instancia  heuristica   melhor        media      gap    tempo
+         P01   BuscaTabu      309 3.090000e+02 0.000000 0.000893
+         P01 PSO_Binario      309 3.090000e+02 0.000000 0.135257
+         P02   BuscaTabu       47 4.700000e+01 7.843137 0.003198
+         P02 PSO_Binario       51 5.100000e+01 0.000000 0.089828
+         P03   BuscaTabu      150 1.500000e+02 0.000000 0.002405
+         P03 PSO_Binario      150 1.500000e+02 0.000000 0.097641
+         P04   BuscaTabu      105 1.050000e+02 1.869159 0.002427
+         P04 PSO_Binario      107 1.070000e+02 0.000000 0.105453
+         P05   BuscaTabu      900 8.790000e+02 2.333333 0.001295
+         P05 PSO_Binario      900 9.000000e+02 0.000000 0.068845
+         P06   BuscaTabu     1735 1.735000e+03 0.000000 0.002425
+         P06 PSO_Binario     1735 1.735000e+03 0.000000 0.098367
+         P07   BuscaTabu     1458 1.457000e+03 0.068587 0.005822
+         P07 PSO_Binario     1458 1.457558e+03 0.030293 0.108556
+         P08   BuscaTabu 13482886 1.347273e+07 0.563643 0.011282
+         P08 PSO_Binario 13549094 1.354449e+07 0.033987 0.131124
+knapPI_1_100   BuscaTabu     9147 9.095250e+03      NaN 0.054968
+knapPI_1_100 PSO_Binario     9147 9.147000e+03      NaN 0.381066

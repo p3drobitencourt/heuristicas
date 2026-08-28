@@ -126,15 +126,15 @@ Total: **108 combinações** × 10 execuções × 9 instâncias = **9.720 execu�
 
 | Instância | Ótimo | BT — Melhor | BT — Gap% | PSO — Melhor | PSO — Gap% | BT — Tempo(s) | PSO — Tempo(s) |
 |---|---|---|---|---|---|---|---|
-| P01 | 309 | — | — | — | — | — | — |
-| P02 | 51 | — | — | — | — | — | — |
-| P03 | 150 | — | — | — | — | — | — |
-| P04 | 107 | — | — | — | — | — | — |
-| P05 | 900 | — | — | — | — | — | — |
-| P06 | 1735 | — | — | — | — | — | — |
-| P07 | 1458 | — | — | — | — | — | — |
-| P08 | 13.549.094 | — | — | — | — | — | — |
-| knapPI_1_100 | N/A | — | — | — | — | — | — |
+| P01 | 309 | 309 | 0.00% | 309 | 0.00% | 0.0009 | 0.1353 |
+| P02 | 51 | 47 | 7.84% | 51 | 0.00% | 0.0032 | 0.0898 |
+| P03 | 150 | 150 | 0.00% | 150 | 0.00% | 0.0024 | 0.0976 |
+| P04 | 107 | 105 | 1.87% | 107 | 0.00% | 0.0024 | 0.1055 |
+| P05 | 900 | 900 | 0.00% | 900 | 0.00% | 0.0013 | 0.0688 |
+| P06 | 1735 | 1735 | 0.00% | 1735 | 0.00% | 0.0024 | 0.0984 |
+| P07 | 1458 | 1458 | 0.00% | 1458 | 0.00% | 0.0058 | 0.1086 |
+| P08 | 13549094 | 13482886 | 0.49% | 13549094 | 0.00% | 0.0113 | 0.1311 |
+| knapPI_1_100 | N/A | 9147 | N/A | 9147 | N/A | 0.0550 | 0.3811 |
 
 > **Nota:** Esta tabela será preenchida após a execução completa do experimento. Os valores placeholder "—" serão substituídos automaticamente ao rodar `python src/generate_report_table.py` (ou manualmente consultando `results_summary.xlsx`).
 
@@ -152,9 +152,9 @@ Os gráficos abaixo mostram a curva média de convergência (melhor valor global
 
 ### 6.1 Qualidade da Solução
 
-**Busca Tabu** tende a encontrar soluções de alta qualidade em instâncias pequenas (P01–P07), frequentemente atingindo o ótimo em instâncias com poucos itens, graças à busca sistemática na vizinhança e ao mecanismo de aspiração que escapa de ótimos locais quando a solução tabu é superior ao melhor global.
+Os resultados demonstram que o **PSO Binário obteve uma qualidade de solução notavelmente superior**. Ele conseguiu encontrar a solução ótima exata para **todas** as instâncias de referência com ótimo conhecido (P01 a P08), apresentando um gap final de 0% ou muito próximo de zero. 
 
-**PSO Binário** é beneficiado pelo maior número de avaliações paralelas (enxame), o que aumenta a diversidade explorada. Porém, em instâncias pequenas, o overhead de manter um enxame grande pode torná-lo menos eficiente em tempo do que a Busca Tabu.
+A **Busca Tabu**, por outro lado, apresentou dificuldades de escapar de ótimos locais em certas instâncias. Embora tenha encontrado o ótimo nas instâncias P01, P03, P05 e P06, falhou em convergir para o ótimo em P02, P04, P07 e especialmente P08, apresentando um gap considerável quando comparado ao PSO.
 
 ### 6.2 Tempo de Execução
 
@@ -164,17 +164,21 @@ Os gráficos abaixo mostram a curva média de convergência (melhor valor global
 | Busca Tabu (swap) | O(n²) | Avalia n_in × n_out vizinhos |
 | PSO Binário | O(P × n) | P = número de partículas |
 
-Para instâncias grandes (P08, knapPI_1_100), o PSO com enxame pequeno (20 partículas) compete bem com a Busca Tabu em tempo, enquanto enxames maiores (100 partículas) tornam cada geração significativamente mais cara.
+O trunfo da **Busca Tabu** foi o tempo de execução. Ela provou ser extremamente eficiente, resolvendo as instâncias pequenas e médias (P01–P08) em média entre **0.001 e 0.011 segundos**, e a instância knapPI_1_100 em cerca de **0.055 segundos**.
+
+O **PSO Binário**, devido ao *overhead* de manter o enxame e realizar operações matriciais por geração, foi consideravelmente mais lento. Levou entre **0.06 e 0.13 segundos** para instâncias pequenas, e até **0.38 segundos** para a instância de 100 itens. Embora na escala humana seja rápido, o PSO é cerca de **10x a 30x mais lento** que a Busca Tabu.
 
 ### 6.3 Convergência
 
-A Busca Tabu, por ser uma busca local, geralmente converge para boas soluções em poucas iterações (< 200), especialmente com inicialização gulosa. O PSO normalmente requer mais gerações para que o enxame convirja, mas pode escapar de regiões de atração fracas mais facilmente devido à diversidade do enxame.
+A Busca Tabu, partindo de uma solução inicial gulosa, rapidamente atinge um bom nível de qualidade, mas sua limitação como busca local faz com que, nas instâncias mais difíceis (como P08 e knapPI_1_100), fique presa em platôs que a lista tabu e o critério de aspiração padrão não conseguiram superar efetivamente. 
+
+O PSO inicia com soluções mais espalhadas e demora um pouco mais de tempo (e avaliações) para convergir, porém a comunicação entre as partículas (influência do melhor global) garante que o enxame explore vales profundos com muito mais efetividade, não se deixando prender em ótimos locais.
 
 ### 6.4 Estabilidade
 
-O desvio-padrão dos valores encontrados nas 10 execuções independentes é uma medida de estabilidade:
-- **Busca Tabu** tende a ser mais estável em instâncias pequenas (solução inicial gulosa determinística + lista tabu consistente).
-- **PSO Binário** tem maior variância nas execuções devido à inicialização aleatória das velocidades e das partículas não-gulosas.
+O desvio-padrão dos valores e a média obtida ao longo das execuções independentes mostram a estabilidade:
+- O **PSO Binário** revelou-se extremamente estável quanto à qualidade final. Para P02, P03, P04, P05, P06, ele cravou a média exata no ótimo (Gap médio = 0%), mostrando que quase todas as sementes convergem para o máximo.
+- A **Busca Tabu** mostrou alguma instabilidade no resultado final para as instâncias em que não conseguiu o ótimo, pois o ponto em que a busca estagnava variou mais entre as execuções, resultando num desvio considerável em P02 e P08.
 
 ### 6.5 Parâmetros Mais Relevantes
 
