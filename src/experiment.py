@@ -1,26 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
+import logging
 import os
 import sys
-os.environ.setdefault("PYTHONIOENCODING", "utf-8")
-if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 """
 experiment.py
 =============
-Executa o grid de parâmetros completo para Busca Tabu e PSO Binário
-sobre as 9 instâncias, 10 execuções por combinação.
+Executa o grid de parametros completo para Busca Tabu e PSO Binario
+sobre as 9 instancias, 10 execucoes por combinacao.
 
-Saídas:
-  results/results_detailed.csv    -- uma linha por execução
+Saidas:
+  results/results_detailed.csv    -- uma linha por execucao
   results/results_summary.xlsx    -- aba Detalhado + aba Resumo
-  results/plots/convergence_*.png -- gráficos de convergência (P06, P07, knapPI)
+  results/plots/convergence_*.png -- graficos de convergencia (P06, P07, knapPI)
 
 Uso:
   cd heuristica
-  python src/experiment.py
+  python -u src/experiment.py
 """
 
 import itertools
@@ -41,6 +39,13 @@ from tabu import tabu_search, TabuResult
 from pso import binary_pso, PSOResult
 
 warnings.filterwarnings("ignore")
+
+# Logger global -- configurado no __main__
+log = logging.getLogger("experiment")
+
+def _log(msg: str = "") -> None:
+    """Wrapper conveniente para log.info."""
+    log.info(msg)
 
 # ---------------------------------------------------------------------------
 # Configuração dos grids de parâmetros
@@ -239,7 +244,7 @@ def _plot_convergence(
     plt.tight_layout()
     plt.savefig(fname, dpi=150, facecolor=fig.get_facecolor())
     plt.close(fig)
-    print(f"    Gráfico salvo: {fname}")
+    _log(f"    Grafico salvo: {fname}")
 
 
 # ---------------------------------------------------------------------------
@@ -250,18 +255,18 @@ def run_experiments(data_dir: str = "data", results_dir: str = "results") -> Non
     plots_dir = os.path.join(results_dir, "plots")
     os.makedirs(plots_dir, exist_ok=True)
 
-    print("=" * 60)
-    print("Carregando instâncias...")
-    print("=" * 60)
+    _log("=" * 60)
+    _log("Carregando instancias...")
+    _log("=" * 60)
     instances = load_all_instances(data_dir=data_dir)
 
     tabu_combos = _tabu_combinations()
     pso_combos  = _pso_combinations()
 
-    print(f"\nCombinações Tabu : {len(tabu_combos)}")
-    print(f"Combinações PSO  : {len(pso_combos)}")
-    print(f"Execuções por combo : {N_RUNS}")
-    print(f"Total estimado de execuções : "
+    _log(f"\nCombinacoes Tabu : {len(tabu_combos)}")
+    _log(f"Combinacoes PSO  : {len(pso_combos)}")
+    _log(f"Execucoes por combo : {N_RUNS}")
+    _log(f"Total estimado de execucoes : "
           f"{(len(tabu_combos) + len(pso_combos)) * N_RUNS * len(instances):,}\n")
 
     all_rows: list[dict] = []
@@ -273,14 +278,14 @@ def run_experiments(data_dir: str = "data", results_dir: str = "results") -> Non
     total_start = time.perf_counter()
 
     for inst in instances:
-        print(f"\n{'='*60}")
-        print(f"  INSTANCIA: {inst.name}  (n={inst.n}, C={inst.capacity}, otimo={inst.optimal_value})")
-        print(f"{'='*60}")
+        _log("\n" + "="*60)
+        _log(f"  INSTANCIA: {inst.name}  (n={inst.n}, C={inst.capacity}, otimo={inst.optimal_value})")
+        _log("="*60)
 
         conv_data[inst.name] = {"BuscaTabu": [], "PSO_Binario": []}
 
         # === BUSCA TABU ===
-        print(f"  [Busca Tabu]  {len(tabu_combos)} combinações × {N_RUNS} execuções ...")
+        _log(f"  [Busca Tabu]  {len(tabu_combos)} combinacoes x {N_RUNS} execucoes ...")
         tabu_best_mean = -1
         tabu_best_histories: list[list[int]] = []
 
@@ -302,12 +307,12 @@ def run_experiments(data_dir: str = "data", results_dir: str = "results") -> Non
 
             if cidx % 6 == 0 or cidx == len(tabu_combos):
                 elapsed = time.perf_counter() - total_start
-                print(f"    Tabu combo {cidx}/{len(tabu_combos)} | {elapsed:.0f}s decorridos")
+                _log(f"    Tabu combo {cidx}/{len(tabu_combos)} | {elapsed:.0f}s decorridos")
 
         conv_data[inst.name]["BuscaTabu"] = tabu_best_histories
 
-        # === PSO BINÁRIO ===
-        print(f"  [PSO Binário]  {len(pso_combos)} combinações × {N_RUNS} execuções ...")
+        # === PSO BINARIO ===
+        _log(f"  [PSO Binario]  {len(pso_combos)} combinacoes x {N_RUNS} execucoes ...")
         pso_best_mean = -1
         pso_best_histories: list[list[int]] = []
 
@@ -329,21 +334,21 @@ def run_experiments(data_dir: str = "data", results_dir: str = "results") -> Non
 
             if cidx % 18 == 0 or cidx == len(pso_combos):
                 elapsed = time.perf_counter() - total_start
-                print(f"    PSO  combo {cidx}/{len(pso_combos)} | {elapsed:.0f}s decorridos")
+                _log(f"    PSO  combo {cidx}/{len(pso_combos)} | {elapsed:.0f}s decorridos")
 
         conv_data[inst.name]["PSO_Binario"] = pso_best_histories
 
     # ---------------------------------------------------------------------------
     # Salvar resultados detalhados
     # ---------------------------------------------------------------------------
-    print("\n" + "=" * 60)
-    print("Salvando resultados...")
-    print("=" * 60)
+    _log("\n" + "="*60)
+    _log("Salvando resultados...")
+    _log("="*60)
 
     df = pd.DataFrame(all_rows)
     csv_path = os.path.join(results_dir, "results_detailed.csv")
     df.to_csv(csv_path, index=False, encoding="utf-8-sig")
-    print(f"  CSV salvo: {csv_path}  ({len(df):,} linhas)")
+    _log(f"  CSV salvo: {csv_path}  ({len(df):,} linhas)")
 
     # Aba de resumo: média + desvio por instância × heurística × parâmetros
     group_cols_tabu = ["instancia", "heuristica", "tenure", "max_iter_param",
@@ -388,16 +393,16 @@ def run_experiments(data_dir: str = "data", results_dir: str = "results") -> Non
                 max_len = max(len(str(cell.value)) if cell.value else 0 for cell in col)
                 ws.column_dimensions[col[0].column_letter].width = min(max_len + 2, 30)
 
-    print(f"  XLSX salvo: {xlsx_path}")
+    _log(f"  XLSX salvo: {xlsx_path}")
 
     # ---------------------------------------------------------------------------
     # Gráficos de convergência
     # ---------------------------------------------------------------------------
-    print("\nGerando gráficos de convergência...")
+    _log("\nGerando graficos de convergencia...")
     for inst in instances:
         if inst.name.upper() not in PLOT_INSTANCES:
             continue
-        print(f"  {inst.name}")
+        _log(f"  {inst.name}")
         _plot_convergence(
             inst_name=inst.name,
             tabu_histories=conv_data[inst.name]["BuscaTabu"],
@@ -407,24 +412,24 @@ def run_experiments(data_dir: str = "data", results_dir: str = "results") -> Non
         )
 
     total_elapsed = time.perf_counter() - total_start
-    print(f"\n{'='*60}")
-    print(f"Experimentos concluídos em {total_elapsed/60:.1f} min")
-    print(f"{'='*60}")
+    _log("\n" + "="*60)
+    _log(f"Experimentos concluidos em {total_elapsed/60:.1f} min")
+    _log("="*60)
 
-    # Imprimir tabela resumo no terminal
+    # Tabela resumo
     _print_final_table(df)
 
 
 def _print_final_table(df: pd.DataFrame) -> None:
-    """Imprime tabela comparativa final no terminal."""
-    print("\n=== Melhor resultado por instância × heurística ===")
+    """Loga tabela comparativa final."""
+    _log("\n=== Melhor resultado por instancia x heuristica ===")
     best = (
         df.groupby(["instancia", "heuristica"])
         .agg(melhor=("melhor_valor", "max"), media=("melhor_valor", "mean"),
              gap=("gap_pct", "mean"), tempo=("tempo_s", "mean"))
         .reset_index()
     )
-    print(best.to_string(index=False))
+    _log(best.to_string(index=False))
 
 
 # ---------------------------------------------------------------------------
@@ -432,9 +437,24 @@ def _print_final_table(df: pd.DataFrame) -> None:
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    # Definir diretórios relativos à pasta raiz do projeto
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    results_dir = os.path.join(root, "results")
+    os.makedirs(results_dir, exist_ok=True)
+
+    log_path = os.path.join(results_dir, "run.log")
+
+    # Configurar logging: arquivo + console (nao redireciona sys.stdout)
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(message)s",
+        datefmt="%H:%M:%S",
+        handlers=[
+            logging.FileHandler(log_path, encoding="utf-8", mode="w"),
+            logging.StreamHandler(sys.stdout),   # mantem pipe original
+        ],
+    )
+
     run_experiments(
         data_dir=os.path.join(root, "data"),
-        results_dir=os.path.join(root, "results"),
+        results_dir=results_dir,
     )

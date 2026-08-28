@@ -1,0 +1,22 @@
+21:06:04 ============================================================
+21:06:04 Carregando instancias...
+21:06:04 ============================================================
+21:06:04 
+Combinacoes Tabu : 36
+21:06:04 Combinacoes PSO  : 108
+21:06:04 Execucoes por combo : 10
+21:06:04 Total estimado de execucoes : 12,960
+
+21:06:04 
+============================================================
+21:06:04   INSTANCIA: P01  (n=10, C=165, otimo=309)
+21:06:04 ============================================================
+21:06:04   [Busca Tabu]  36 combinacoes x 10 execucoes ...
+21:06:04     Tabu combo 6/36 | 0s decorridos
+21:06:04     Tabu combo 12/36 | 0s decorridos
+21:06:04     Tabu combo 18/36 | 0s decorridos
+21:06:04     Tabu combo 24/36 | 0s decorridos
+21:06:04     Tabu combo 30/36 | 0s decorridos
+21:06:04     Tabu combo 36/36 | 0s decorridos
+21:06:04   [PSO Binario]  108 combinacoes x 10 execucoes ...
+21:06:10     PSO  combo 18/108 | 6s decorridos

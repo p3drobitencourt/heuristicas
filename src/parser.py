@@ -76,13 +76,16 @@ _VALUE_FILE = {
 }
 
 
-def _download(url: str, dest: str, force: bool = False) -> str:
+def _download(url: str, dest: str, force: bool = False, timeout: int = 30) -> str:
     """Baixa `url` para `dest` (só baixa se o arquivo não existir)."""
     if os.path.exists(dest) and not force:
         return dest
     os.makedirs(os.path.dirname(dest), exist_ok=True)
     try:
-        urllib.request.urlretrieve(url, dest)
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=timeout) as response:
+            with open(dest, "wb") as f:
+                f.write(response.read())
     except Exception as exc:
         raise RuntimeError(f"Falha ao baixar {url}: {exc}") from exc
     return dest
@@ -229,21 +232,19 @@ def load_all_instances(data_dir: str = "data", force: bool = False) -> list[Inst
     instances = []
     for i in range(1, 9):
         name = f"p{i:02d}"
-        print(f"  Carregando {name.upper()}...", end=" ", flush=True)
         try:
             inst = load_fsu_instance(name, data_dir=data_dir, force=force)
-            print(f"OK  (n={inst.n}, C={inst.capacity}, ótimo={inst.optimal_value})")
+            print(f"  Carregando {name.upper()}... OK  (n={inst.n}, C={inst.capacity}, otimo={inst.optimal_value})")
             instances.append(inst)
         except Exception as exc:
-            print(f"ERRO: {exc}")
+            print(f"  Carregando {name.upper()}... ERRO: {exc}")
 
-    print("  Carregando knapPI_1_100...", end=" ", flush=True)
     try:
         inst = load_knappi_instance(data_dir=data_dir, force=force)
-        print(f"OK  (n={inst.n}, C={inst.capacity}, ótimo={inst.optimal_value})")
+        print(f"  Carregando knapPI_1_100... OK  (n={inst.n}, C={inst.capacity}, otimo={inst.optimal_value})")
         instances.append(inst)
     except Exception as exc:
-        print(f"ERRO: {exc}")
+        print(f"  Carregando knapPI_1_100... ERRO: {exc}")
 
     return instances
 
